@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Audio Transcription</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 50px auto;
+      }
+      button {
+        padding: 10px 15px;
+        cursor: pointer;
+      }
+      #result {
+        margin-top: 20px;
+        white-space: pre-wrap;
+        background: #f4f4f4;
+        padding: 15px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>🎙️ Audio Transcription Service</h2>
+
+    <input type="file" id="audioFile" accept="audio/*" />
+    <br /><br />
+    <button onclick="uploadAudio()">Transcribe</button>
+
+    <div id="result"></div>
+
+    <script>
+      async function uploadAudio() {
+        const fileInput = document.getElementById("audioFile");
+        const resultDiv = document.getElementById("result");
+
+        if (!fileInput.files.length) {
+          alert("Please select an audio file.");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("audio", fileInput.files[0]);
+
+        resultDiv.innerText = "Processing...";
+
+        try {
+          const response = await fetch("/transcribe", {
+            method: "POST",
+            body: formData,
+          });
+
+          const data = await response.json();
+
+          resultDiv.innerText =
+            "Full Text:\n" +
+            data.full_text +
+            "\n\nSegments:\n" +
+            JSON.stringify(data.segments, null, 2);
+        } catch (error) {
+          resultDiv.innerText = "Error processing audio.";
+        }
+      }
+    </script>
+  </body>
+</html>
