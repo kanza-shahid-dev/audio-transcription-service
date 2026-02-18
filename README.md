@@ -2,6 +2,8 @@
 
 A simple Node.js transcription pipeline that accepts audio files, converts them to WAV (if needed), and transcribes them using OpenAI Whisper.
 
+LIVE URL: https://audio-transcription-service.onrender.com/
+
 ## Features
 
 - Upload audio files (MP3, WAV, others supported via conversion)
@@ -27,7 +29,7 @@ A simple Node.js transcription pipeline that accepts audio files, converts them 
 
 - FFmpeg (audio conversion)
 
-## OpenAI Whisper API
+- OpenAI Whisper API
 
 ### Project Structure
 
@@ -36,6 +38,9 @@ project/
 │
 ├── controllers/
 │ └── transcribeController.js
+│
+├── public/
+│ └── index.js
 │
 ├── services/
 │ └── transcribe.js
@@ -99,3 +104,44 @@ Response: "Transcription Service Running!"
                     ]
         }
 ```
+
+## Key Design Decisions
+
+1️⃣ Express.js for API Layer
+
+Chosen because:
+
+- Lightweight and minimal
+
+- Fast to set up
+
+- Well-suited for REST APIs
+
+2️⃣ Multer for File Upload Handling
+
+- Middleware-based
+
+- Supports file filtering and size limits
+
+- Integrates easily with Express
+
+- Stores files temporarily for processing
+
+3️⃣ Audio Format Validation + Conversion
+
+- Only mp3 and wav are directly supported.
+
+- If another format is uploaded:
+
+- It is converted to WAV.
+
+- Conversion added as it
+  - Standardizes audio format
+  - Reduces runtime transcription issues
+
+4️⃣ OpenAI Whisper for Transcription
+
+- Used whisper-1 model via OpenAI SDK.
+- Used verbose_json response format as it provides:
+  - Full transcription text
+  - Timestamped segments
