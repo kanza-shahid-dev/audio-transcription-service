@@ -10,6 +10,8 @@ const PORT = 3000;
 // Multer setup: store uploaded files in 'uploads/'
 const upload = multer({ dest: "uploads/" });
 
+app.use(express.static("public"));
+
 app.get("/", (req, res) => res.send("Transcription Service Running!"));
 
 app.post("/upload", upload.single("audio"), (req, res) => {
