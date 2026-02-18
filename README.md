@@ -1,38 +1,37 @@
-🎙️ Audio Transcription Service
+# Audio Transcription Service
 
 A simple Node.js transcription pipeline that accepts audio files, converts them to WAV (if needed), and transcribes them using OpenAI Whisper.
 
-🚀 Features
+## Features
 
-Upload audio files (MP3, WAV, others supported via conversion)
+- Upload audio files (MP3, WAV, others supported via conversion)
 
-Automatic format validation
+- Automatic format validation
 
-Converts unsupported formats to WAV using ffmpeg
+- Converts unsupported formats to WAV using ffmpeg
 
-Transcribes audio using OpenAI Whisper (whisper-1)
+- Transcribes audio using OpenAI Whisper (whisper-1)
 
-Returns:
+- Returns:
+  - Full transcript
 
-Full transcript
+  - Timestamped segments
 
-Timestamped segments
+## Tech Stack
 
-Clean modular architecture
+- Node.js
 
-🏗️ Tech Stack
+- Express.js
 
-Node.js
+- Multer (file uploads)
 
-Express.js
+- FFmpeg (audio conversion)
 
-Multer (file uploads)
+## OpenAI Whisper API
 
-FFmpeg (audio conversion)
+### Project Structure
 
-OpenAI Whisper API
-
-📁 Project Structure
+```bash
 project/
 │
 ├── controllers/
@@ -49,66 +48,54 @@ project/
 ├── .env
 ├── server.js
 └── package.json
+```
 
-⚙️ Installation
-1️⃣ Clone the repository
-git clone <repo-url>
-cd project
+## Installation
 
-2️⃣ Install dependencies
-npm install
+- Clone the repository
 
-3️⃣ Add environment variables
+```bash
+    git clone https://github.com/kanza-shahid-dev/audio-transcription-service
+```
 
-Create a .env file:
+- Install dependencies
 
-OPENAI_API_KEY=your_openai_api_key
+```bash
+    npm install
+```
 
-▶️ Run the Server
-node server.js
+- Run the Server
 
-Server runs at:
+```bash
+    node server.js
+```
 
-http://localhost:3000
+- Server runs at: http://localhost:3000
 
-📡 API Endpoints
-1️⃣ Health Check
+## API Endpoints
+
+- Health Check
+
+```bash
 GET /
+Response: "Transcription Service Running!"
+```
 
-Response:
+- Transcribe Audio
 
-"Transcription Service Running!"
-
-2️⃣ Upload File
-POST /upload
-
-Form-data:
-
-audio: <audio file>
-
-Response:
-
-{
-"message": "File uploaded",
-"filePath": "uploads/xyz"
-}
-
-3️⃣ Transcribe Audio
-POST /transcribe
-
-Form-data:
-
-audio: <audio file>
-
-Response:
-
-{
-"full_text": "Hello world...",
-"segments": [
-{
-"start": 0,
-"end": 3.2,
-"text": "Hello world"
-}
-]
-}
+```bash
+    POST /transcribe
+    Form-data:
+    audio: <audio file>
+    Response:
+        {
+        "full_text": "Hello world...",
+        "segments": [
+                        {
+                            "start": 0,
+                            "end": 3.2,
+                            "text": "Hello world"
+                        }
+                    ]
+        }
+```
